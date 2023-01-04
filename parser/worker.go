@@ -43,7 +43,7 @@ type Worker struct {
 func NewWorker(ctx *Context, queue types.HeightQueue, index int) Worker {
 	return Worker{
 		index:   index,
-		codec:   ctx.EncodingConfig.Marshaler,
+		codec:   ctx.EncodingConfig.Codec,
 		node:    ctx.Node,
 		queue:   queue,
 		db:      ctx.Database,
@@ -355,7 +355,7 @@ func (w Worker) ExportTxs(txs []*types.Tx) error {
 		}
 	}
 
-	totalBlocks := w.db.GetTotalBlocks()
+	totalBlocks, _ := w.db.GetTotalBlocks()
 	logging.DbBlockCount.WithLabelValues("total_blocks_in_db").Set(float64(totalBlocks))
 
 	dbLatestHeight, err := w.db.GetLastBlockHeight()

@@ -30,7 +30,7 @@ type Database interface {
 	SaveBlock(block *types.Block) error
 
 	// GetTotalBlocks returns total number of blocks stored in database.
-	GetTotalBlocks() int64
+	GetTotalBlocks() (int64, error)
 
 	// SaveTx will be called to save each transaction contained inside a block.
 	// An error is returned if the operation fails.
